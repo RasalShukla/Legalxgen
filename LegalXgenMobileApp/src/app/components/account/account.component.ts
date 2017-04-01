@@ -6,21 +6,22 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { GlobalValidator } from "../../shared/validators/mail-validators";
 import { AccountService } from '../../shared/services/account.service'
 
-
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent{
+export class AccountComponent implements OnInit{
   
+  ngOnInit() {
+      this._accountService.clearDataOnBackMovement();
+   }
    loginModel: Login = new Login();
    form: FormGroup;
    public responce: any;
   
    public globalEmailData:any;
   constructor( private fb: FormBuilder,
-              
                private _accountService : AccountService,
              ) { 
                   this.form = fb.group({

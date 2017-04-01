@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GlobalEventsManager } from '../../globalEventManager';
+import { AccountService } from '../../shared/services/account.service';
+
 
 @Component({
   selector: 'app-appheader',
   templateUrl: './appheader.component.html',
   styleUrls: ['./appheader.component.css']
 })
-export class AppheaderComponent {
+export class AppheaderComponent  {
 
+ 
 
-constructor(  private _globalEventsManager: GlobalEventsManager, private router: Router,){
+constructor(   private router: Router,private _accountService: AccountService){
+  
   }
 
 logOut() {
-    this._globalEventsManager.showNavBar.emit(false);
-    this.router.navigate(['/account']);
+    this._accountService.logOut();
 
   }
  

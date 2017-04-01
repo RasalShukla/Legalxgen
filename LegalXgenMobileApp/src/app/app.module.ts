@@ -20,6 +20,7 @@ import { ToasterModule, ToasterService, ToasterConfig, Toast } from 'angular2-to
 import { NotificationService } from './shared/services/notification.service';
 import { AlertService } from './shared/services/alert.service';
 import { ConfirmActivateGuard } from './shared/security/confirm-activate-guard';
+
 @NgModule({
   declarations: [
     AppComponent,

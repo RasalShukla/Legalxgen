@@ -37,6 +37,16 @@ public globalEmailData : any;
     
    
   }
+  clearDataOnBackMovement(){
+    this.authInfo$.next(AccountService.UNKNOWN_USER);
+    this._globalEventsManager.showNavBar.emit(false);
+  }
+
+  logOut(){
+    this.authInfo$.next(AccountService.UNKNOWN_USER);
+    this._globalEventsManager.showNavBar.emit(false);
+    this._router.navigate(['/account']);
+  }
 
   afterLoginResponce(data : Login)
   {
