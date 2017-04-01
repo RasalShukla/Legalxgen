@@ -19,6 +19,7 @@ import { AccountService } from './shared/services/account.service'
 import { ToasterModule, ToasterService, ToasterConfig, Toast } from 'angular2-toaster';
 import { NotificationService } from './shared/services/notification.service';
 import { AlertService } from './shared/services/alert.service';
+import { ConfirmActivateGuard } from './shared/security/confirm-activate-guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { AlertService } from './shared/services/alert.service';
     GlobalEventsManager,
     AccountService,
     NotificationService,
+    ConfirmActivateGuard,
     AlertService,
     [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
   ],
