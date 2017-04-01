@@ -1,36 +1,29 @@
-
-
-
 <div class="login-box">
-  <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
-
-    <form action="/account/logon" method="post">
+   <div class="login-logo">
+      <a href="javascript:void(0)"><b>Admin</b>LTE</a>
+   </div>
+   <!-- /.login-logo -->
+   <div class="login-box-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+      <form class="form-horizontal" [formGroup]="form" role="form" (ngSubmit)="login(loginModel)">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+         <input id="email" #email autocomplete="off" type="text" class="form-control validate"  [(ngModel)]="loginModel.email" formControlName="email" placeholder="Email" [class.invalid]="form.controls['email'].touched && !form.controls['email'].valid"  >
+         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
+      <label for="email" *ngIf="!form.controls['email'].valid && form.controls['email'].dirty" style="color:#a94442">Email is required, email format is not valid</label>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+         <input id="password" type="password" class="form-control validate" #password [(ngModel)]="loginModel.password" formControlName="password" placeholder="Password" [class.invalid]="form.controls['password'].touched && !form.controls['password'].valid">
+         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
+      <label for="password" autocomplete="off" *ngIf="!form.controls['password'].valid && form.controls['password'].dirty" style="color:#a94442">Password is required and needs to contain at least 6 chars</label>
       <div class="row">
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" (click)='login()' class="btn btn-primary btn-block btn-flat">Sign In</button>
-        </div>
-        <!-- /.col -->
+         <!-- /.col -->
+         <div class="col-xs-4">
+            <button class="btn btn-primary btn-block btn-flat" type="submit" [disabled]="!form.valid" title="Login" value="Login">Sign In</button>
+         </div>
+         <!-- /.col -->
       </div>
-    </form>
-  </div>
-  <!-- /.login-box-body -->
+      </form>
+   </div>
+   <!-- /.login-box-body -->
 </div>
-
-
-
-
-

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GlobalEventsManager } from './globalEventManager';
+import { AccountService } from './shared/services/account.service'
+
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,9 @@ import { GlobalEventsManager } from './globalEventManager';
 })
 export class AppComponent {
   public showMenu : boolean;
-  constructor(  private _globalEventsManager: GlobalEventsManager, private router: Router,){
-     
+  public globalEmailData : any;
+  constructor(  private _globalEventsManager: GlobalEventsManager, private router: Router, 
+                private _accountService: AccountService){
      this.showMenu = false;
      this._globalEventsManager.showNavBar.subscribe((mode : boolean) =>{
              this.showMenu =mode;  
