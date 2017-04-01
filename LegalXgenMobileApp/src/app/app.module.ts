@@ -10,6 +10,7 @@ import { AppmenuComponent } from './components/appmenu/appmenu.component';
 import { NewtimeentryComponent } from './components/timesheet/newtimeentry/newtimeentry.component';
 import { MytimesheetComponent } from './components/timesheet/mytimesheet/mytimesheet.component';
 import { Routing } from './app.routing';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import { Routing } from './app.routing';
     Routing
 
   ],
-  providers: [],
+  providers: [
+    [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
