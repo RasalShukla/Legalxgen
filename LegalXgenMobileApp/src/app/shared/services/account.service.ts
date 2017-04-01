@@ -9,6 +9,7 @@ import {Observable, BehaviorSubject, Subject} from "rxjs/Rx";
 import { AuthInfo } from "../../shared/globalUserInfo";
 import { GlobalEventsManager } from '../../globalEventManager';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NotificationService } from '../services/notification.service'
 
 @Injectable()
 export class AccountService {
@@ -18,7 +19,10 @@ export class AccountService {
 public globalEmailData : any;
   //authInfo$:BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(FirebaseAuthentication.UNKNOWN_USER);
   public responce:any;
-  constructor(private _http:Http, private _globalEventsManager: GlobalEventsManager,private _router : Router) { }
+  constructor(private _http:Http, 
+              private _globalEventsManager: GlobalEventsManager,
+              private _router : Router,
+              private _notificationService: NotificationService) { }
 
 
   login(loginData:Login)  {
@@ -45,6 +49,7 @@ public globalEmailData : any;
       subject.next(authInfo);
       subject.complete();
       this._router.navigate(['/mytimesheet']);
+       this._notificationService.popToastSuccess('Welcome','User has authenticated to use this site');
   
   }
 }

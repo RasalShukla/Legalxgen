@@ -16,7 +16,9 @@ import { DatepickerModule } from 'ng2-bootstrap';
 import { AccountComponent } from './components/account/account.component';
 import { GlobalEventsManager } from './globalEventManager';
 import { AccountService } from './shared/services/account.service'
-
+import { ToasterModule, ToasterService, ToasterConfig, Toast } from 'angular2-toaster';
+import { NotificationService } from './shared/services/notification.service';
+import { AlertService } from './shared/services/alert.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,11 +36,14 @@ import { AccountService } from './shared/services/account.service'
     Routing,
     DatepickerModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToasterModule
   ],
   providers: [
     GlobalEventsManager,
     AccountService,
+    NotificationService,
+    AlertService,
     [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
   ],
   bootstrap: [AppComponent]
