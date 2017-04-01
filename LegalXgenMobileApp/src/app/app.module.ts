@@ -11,8 +11,9 @@ import { NewtimeentryComponent } from './components/timesheet/newtimeentry/newti
 import { MytimesheetComponent } from './components/timesheet/mytimesheet/mytimesheet.component';
 import { Routing } from './app.routing';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
-
+import { DatepickerModule } from 'ng2-bootstrap';
+import { AccountComponent } from './components/account/account.component';
+import { GlobalEventsManager } from './globalEventManager';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,16 +21,18 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     AppfooterComponent,
     AppmenuComponent,
     NewtimeentryComponent,
-    MytimesheetComponent
+    MytimesheetComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    Routing
-
+    Routing,
+    DatepickerModule.forRoot()
   ],
   providers: [
+    GlobalEventsManager,
     [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
   ],
   bootstrap: [AppComponent]

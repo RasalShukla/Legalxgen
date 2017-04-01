@@ -1,7 +1,7 @@
-<app-appheader></app-appheader>
-<app-appmenu></app-appmenu>
+<app-appheader *ngIf="showMenu"></app-appheader>
+<app-appmenu *ngIf="showMenu"></app-appmenu>
 <div class="content-wrapper">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>  
 </div>
-<app-appfooter></app-appfooter>
 
+<app-appfooter *ngIf="showMenu"></app-appfooter>

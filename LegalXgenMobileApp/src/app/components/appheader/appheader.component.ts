@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GlobalEventsManager } from '../../globalEventManager';
 
 @Component({
   selector: 'app-appheader',
   templateUrl: './appheader.component.html',
   styleUrls: ['./appheader.component.css']
 })
-export class AppheaderComponent implements OnInit {
+export class AppheaderComponent {
 
-  constructor() { }
 
-  ngOnInit() {
+constructor(  private _globalEventsManager: GlobalEventsManager, private router: Router,){
   }
 
+logOut() {
+    this._globalEventsManager.showNavBar.emit(false);
+    this.router.navigate(['/account']);
+
+  }
+ 
 }
