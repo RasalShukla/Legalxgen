@@ -26,13 +26,16 @@ public globalEmailData : any;
 
 
   login(loginData:Login)  {
-  
+    
     let body = JSON.stringify(loginData);
      this._http.get(this.baseUrl, body).map((res => res.json()))
      .subscribe(
         (data) => this.afterLoginResponce(data),
         (err) => console.log("Error" + err)
       );
+
+      // if you don't have the API the please comment the above code and uncomment the below code.
+    // this.withoutApiLogin('rasalshukla@gmail.com');
     
    
   }
@@ -47,6 +50,18 @@ public globalEmailData : any;
     this._router.navigate(['/account']);
   }
 
+
+  withoutApiLogin(email : string)
+  {
+    const subject = new Subject<any>();
+      this._globalEventsManager.showNavBar.emit(true);
+      const authInfo = new AuthInfo(email);
+      this.authInfo$.next(authInfo);
+      subject.next(authInfo);
+      subject.complete();
+      this._router.navigate(['/mytimesheet']);
+       this._notificationService.popToastSuccess('Welcome','User has authenticated to use this site');
+  }
   afterLoginResponce(data : Login)
   {
    
