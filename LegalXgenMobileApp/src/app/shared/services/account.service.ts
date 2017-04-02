@@ -15,7 +15,7 @@ import {xhrHeaders} from "./xhr-headers";
 @Injectable()
 export class AccountService {
    static UNKNOWN_USER = new AuthInfo(null);
-    baseUrl: string = "http://localhost:51289/api/account/";
+    baseUrl: string = "http://localhost:51289/api/account";
    authInfo$:BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AccountService.UNKNOWN_USER);
 public globalEmailData : any;
   public responce:any;
@@ -25,17 +25,19 @@ public globalEmailData : any;
               private _notificationService: NotificationService) { }
 
 
-  login(loginData:Login)  {
+  login(login:Login)  {
     
-    let body = JSON.stringify(loginData);
-     this._http.get(this.baseUrl, body).map((res => res.json()))
+      //this._http.delete(this.baseUrl + "/" +id).map((res => res.json())).subscribe(aa=>console.log(aa),err=>console.log(err));
+     //this._http.get(this.baseUrl+ "/" + id).map((res => res.json())).subscribe(aa=>console.log(aa),err=>console.log(err));
+     //this._http.put(this.baseUrl +"/" + id,login).map((res => res.json())).subscribe(aa=>console.log(aa),err=>console.log(err));
+     let url = this.baseUrl + "?email=" + login['email'] + "&password=" + login['password'];
+     this._http.get(url).map((res => res.json()))
      .subscribe(
         (data) => this.afterLoginResponce(data),
         (err) => console.log("Error" + err)
       );
-
       // if you don't have the API the please comment the above code and uncomment the below code.
-    // this.withoutApiLogin('rasalshukla@gmail.com');
+   // this.withoutApiLogin('rasalshukla@gmail.com');
     
    
   }

@@ -23,7 +23,8 @@ export class NewtimeentryComponent implements OnInit {
     smallHeadingText: string = "New ENtry";
     breadcrumbParentText: string = "Dashboard";
     breadcrumbActiveText: string = "Time Entry";
-   
+    public allTimeEntryData : TimeEntry[]; 
+    public timeEntryById : TimeEntry; 
    
   constructor( private _accountService: AccountService,
                private _notificationService: NotificationService,
@@ -48,25 +49,35 @@ export class NewtimeentryComponent implements OnInit {
   ngOnInit() {
   }
 
-  save(timeEntryId){
-      var formData = this.form.value;
-      //this._timeEntryService.createTimeEntry(formData);
-     // this._timeEntryService.deleteTimeEntryById("1");
-     this._timeEntryService.updateTimeEntry(formData);
-
-     
-      
+  loadTimeEntry(){
+   this._timeEntryService.loadAllTimeEntry(); 
+      // this._crudEmployeeService.getAllEmployees().subscribe(employeesInfo => { this.employees = employeesInfo });
+    console.log(this.allTimeEntryData);
   }
-  deleteEmployeeInfo(employeeKey: string, employeeName: string) {
+
+ loadTimeEntryById(timeEntryId){
+   this._timeEntryService.loadTimeEntryById(timeEntryId); 
+    console.log(this.timeEntryById)
+   
+ }
+
+  saveTimeEntry(timeEntryId){
+      var formData = this.form.value;
+      this._timeEntryService.createTimeEntry(formData); 
+  }
+
+   updateTimeEntry(timeEntryId){
+      var formData = this.form.value;
+      this._timeEntryService.updateTimeEntry(timeEntryId,formData); 
+  }
+
+  deleteTimeEntry(employeeKey: string) {
     this._alertService.openConfirmationDialog('Delete Time','Are you sure you want delete this time entry',
       () => {
         this._timeEntryService.deleteTimeEntryById("1");
         this._notificationService.popToastSuccess('Success','You have successfully delete the time entry.');
       });
   }
-  deleteTimeEnntry(timeEntryId){
-
-
-  }
+  
 
 }
