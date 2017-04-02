@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule,Http } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppheaderComponent } from './components/appheader/appheader.component';
@@ -20,6 +20,7 @@ import { ToasterModule, ToasterService, ToasterConfig, Toast } from 'angular2-to
 import { NotificationService } from './shared/services/notification.service';
 import { AlertService } from './shared/services/alert.service';
 import { ConfirmActivateGuard } from './shared/security/confirm-activate-guard';
+import { TimeEntryService }    from './shared/services/time-entry.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,6 @@ import { ConfirmActivateGuard } from './shared/security/confirm-activate-guard';
     FormsModule,
     HttpModule,
     Routing,
-    DatepickerModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     ToasterModule
@@ -46,6 +46,7 @@ import { ConfirmActivateGuard } from './shared/security/confirm-activate-guard';
     AccountService,
     NotificationService,
     ConfirmActivateGuard,
+    TimeEntryService,
     AlertService,
     [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
   ],

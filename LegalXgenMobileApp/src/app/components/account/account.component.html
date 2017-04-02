@@ -7,7 +7,7 @@
       <p class="login-box-msg">Sign in to start your session</p>
       <form class="form-horizontal" [formGroup]="form" role="form" (ngSubmit)="login(loginModel)">
       <div class="form-group has-feedback">
-         <input id="email" #email autocomplete="off" type="text" class="form-control validate"  [(ngModel)]="loginModel.email" formControlName="email" placeholder="Email" [class.invalid]="form.controls['email'].touched && !form.controls['email'].valid"  >
+         <input id="email" #email autocomplete="off" type="text" class="form-control validate"  [(ngModel)]="loginModel.email" formControlName="email" placeholder="Email" [class.invalid]="form.controls['email'].touched && !form.controls['email'].valid">
          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <label for="email" *ngIf="!form.controls['email'].valid && form.controls['email'].dirty" style="color:#a94442">Email is required, email format is not valid</label>
