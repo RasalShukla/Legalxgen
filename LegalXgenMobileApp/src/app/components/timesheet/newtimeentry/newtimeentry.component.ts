@@ -56,8 +56,24 @@ export class NewtimeentryComponent implements OnInit {
   }
 
  loadTimeEntryById(timeEntryId){
-   this._timeEntryService.loadTimeEntryById(timeEntryId); 
-    console.log(this.timeEntryById)
+   this._timeEntryService.loadTimeEntryById(timeEntryId).subscribe();
+
+    let sub =  this._timeEntryService.loadTimeEntryById(timeEntryId)
+            .subscribe(data => {
+                if (data != null) {
+                    this.timeEntryById = data; // We have something     
+                }
+                else {
+                    console.log('No data returned');
+                    // Do something else letting the end user know of this.
+                }
+            },
+            err => {
+                console.log('we got an error:', err);
+            });
+ console.log(this.timeEntryById);
+  //  this._timeEntryService.loadTimeEntryById(timeEntryId); 
+  //   console.log(this.timeEntryById)
    
  }
 

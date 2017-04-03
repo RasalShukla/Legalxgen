@@ -54,16 +54,23 @@ createTimeEntry(timeEntry : TimeEntry){
     }   
 
     loadAllTimeEntry() {
-    return   this._http.get(this.baseUrl).map((res => res.json())).subscribe(res=> console.log(res),err => console.log(err))
+    return   this._http.get(this.baseUrl).map((res => res.json()))
+     .subscribe(res=> console.log(res),err => console.log(err))
            
   }
   
    loadTimeEntryById(id) 
    {
-      this._http.get(this.baseUrl+ "/" + id).map((res => res.json())).subscribe(
-                     result=> console.log(result),
-                     err=>console.log(err)
-                     );
+
+    return this._http.get(this.baseUrl+ "/" + id).map((res => res.json()));
+     //.subscribe(
+       //              result=> console.log(result),
+         //            err=>console.log(err)
+           //          );
+      // this._http.get(this.baseUrl+ "/" + id).map((res => res.json())).subscribe(
+      //                result=> console.log(result),
+      //                err=>console.log(err)
+      //                );
                     
    }
    processResult(data){

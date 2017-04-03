@@ -1,3 +1,4 @@
+
 <section class="content-header">
    <h1>
       {{mainHeadingText}}
@@ -33,15 +34,14 @@
                   <div class="input-group-addon">
                      <i class="fa fa-calendar"></i>
                   </div>
-                  <input id="date" type="text"  autocomplete="off" class="form-control validate pull-right"  [(ngModel)]="timeEntryModel.date" formControlName="date"  >
+                  <input id="date" type="text" data-provide="datepicker"  autocomplete="off" class="form-control validate pull-right"  [(ngModel)]="timeEntryModel.date" formControlName="date"  >
                </div>
                <!-- /.input group -->
             </div>
             <!-- /.form group -->
             <div class="checkbox">
                <label>
-               <input id="isBillable" type="checkbox"   [(ngModel)]="timeEntryModel.isBillable" formControlName="isBillable"  >
-               <input type="checkbox"> Billable
+               <input id="isBillable" type="checkbox"   [(ngModel)]="timeEntryModel.isBillable" formControlName="isBillable"  >Billable
                </label>
             </div>
             <div class="form-group">
@@ -50,10 +50,10 @@
                   <div class="input-group-addon">
                      <i class="fa fa-clock-o"></i>
                   </div>
-                  <input id="totalTime" type="text"  autocomplete="off" class="form-control validate pull-right"  [(ngModel)]="timeEntryModel.totalTime" formControlName="totalTime"  >
+                 <input id="totalTime" type="text"   autocomplete="off" class="form-control validate pull-right"  [(ngModel)]="timeEntryModel.totalTime" formControlName="totalTime"  > 
                </div>
                <!-- /.input group -->
-            </div>
+            </div>    
             <div class="form-group">
                <label>Time (Billable):</label>
                <div class="input-group date">

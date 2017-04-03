@@ -15,8 +15,8 @@ export class AccountComponent implements OnInit{
   
   ngOnInit() {
       this._accountService.clearDataOnBackMovement();
-     // this.loginModel.email = "rasalshukla@gmail.com";
-     // this.loginModel.password = "123456";
+      this.loginModel.email = "rasalshukla@gmail.com";
+      this.loginModel.password = "123456";
    }
    loginModel: Login = new Login();
   
