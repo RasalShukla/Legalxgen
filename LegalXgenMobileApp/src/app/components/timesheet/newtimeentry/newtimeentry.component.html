@@ -17,6 +17,23 @@
         
          <div class="box-body" role="form"  [formGroup]="form">
         
+  <div class="bootstrap-timepicker">
+                <div class="form-group">
+                  <label>Time picker(This is dummy Section please remove it):</label>
+
+                  <div class="input-group">
+                    <input type="text" class="form-control timepicker">
+                    <div class="input-group-addon">
+                      <i class="fa fa-clock-o"></i>
+                    </div>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+  </div>
+
+
+
+
             <!-- Date -->
             <div class="form-group">
                <div class="input-group date">
@@ -44,23 +61,25 @@
                <input id="isBillable" type="checkbox"   [(ngModel)]="timeEntryModel.isBillable" formControlName="isBillable"  >Billable
                </label>
             </div>
-            <div class="form-group">
+            <div class="form-group  bootstrap-timepicker">
                <label>Time (Total):</label>
                <div class="input-group date">
                   <div class="input-group-addon">
                      <i class="fa fa-clock-o"></i>
                   </div>
-                 <input id="totalTime" type="text"   autocomplete="off" class="form-control validate pull-right"  [(ngModel)]="timeEntryModel.totalTime" formControlName="totalTime"  > 
+                 <input id="totalTime" type="text"   autocomplete="off" class="form-control timepicker"  [(ngModel)]="timeEntryModel.totalTime" formControlName="totalTime"  > 
                </div>
                <!-- /.input group -->
-            </div>    
-            <div class="form-group">
+            </div>  
+            
+              
+            <div class="form-group bootstrap-timepicker">
                <label>Time (Billable):</label>
                <div class="input-group date">
                   <div class="input-group-addon">
                      <i class="fa fa-clock-o"></i>
                   </div>
-                  <input id="billableTime" type="text"  autocomplete="off" class="form-control validate pull-right"  [(ngModel)]="timeEntryModel.billableTime" formControlName="billableTime"  >
+                  <input id="billableTime" type="text"  autocomplete="off" class="form-control  timepicker"  [(ngModel)]="timeEntryModel.billableTime" formControlName="billableTime"  >
                </div>
                <!-- /.input group -->
             </div>

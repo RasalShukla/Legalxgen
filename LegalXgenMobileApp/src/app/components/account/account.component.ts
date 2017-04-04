@@ -5,6 +5,8 @@ import { Login } from '../../shared/model/login'
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { GlobalValidator } from "../../shared/validators/mail-validators";
 import { AccountService } from '../../shared/services/account.service'
+declare var $:any;
+declare var timepicker: any;
 
 @Component({
   selector: 'app-account',

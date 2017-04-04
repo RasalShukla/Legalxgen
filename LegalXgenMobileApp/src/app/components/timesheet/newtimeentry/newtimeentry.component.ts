@@ -6,7 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TimeEntryService} from '../../../shared/services/time-entry.service';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { AlertService } from '../../../shared/services/alert.service';
-
+declare var $:any;
+declare var timepicker: any;
 
 
 @Component({
@@ -47,6 +48,11 @@ export class NewtimeentryComponent implements OnInit {
    }
 
   ngOnInit() {
+         $( document ).ready(function() {
+         $(".timepicker").timepicker({
+          showInputs: false
+         });
+});
   }
 
   loadTimeEntry(){
