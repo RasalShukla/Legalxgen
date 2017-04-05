@@ -26,6 +26,8 @@ export class NewtimeentryComponent implements OnInit {
     breadcrumbActiveText: string = "Time Entry";
     public allTimeEntryData : TimeEntry[]; 
     public timeEntryById : TimeEntry; 
+    /*Typehaed Data storer */
+    public states: string[];   
    
   constructor( private _accountService: AccountService,
                private _notificationService: NotificationService,
@@ -42,45 +44,52 @@ export class NewtimeentryComponent implements OnInit {
             isBillable: [],
             workDone:[]
         });
-
+      // Way to access global data 
+      console.log("Way to access global data");
       this._accountService.authInfo$.map(authInfo => authInfo.$userEmail).subscribe(userGlobalData=> this.globalEmailData = userGlobalData);
       console.log("Global Data Email :-" + this.globalEmailData);
    }
 
   ngOnInit() {
+      this.loadTimeEntry();
+      /* Bootstarp TypeAhed Initialization code start */
+        this._timeEntryService.loadTypeAheadData().subscribe(typeAheadResponce=>{
+           this.states = typeAheadResponce;
+            console.log(this.states);
+        });
+       
+       
+        /* Bootstarp time timepicker initialization code */
+        /* This is wrong practice to use jquery, 
+            in future I will create a component 
+           for time picker , I did it just because of less time
+           but my personal suggestion is please don't use this approch */
          $( document ).ready(function() {
          $(".timepicker").timepicker({
           showInputs: false
          });
-});
+        
+      });
   }
 
   loadTimeEntry(){
-   this._timeEntryService.loadAllTimeEntry(); 
-      // this._crudEmployeeService.getAllEmployees().subscribe(employeesInfo => { this.employees = employeesInfo });
-    console.log(this.allTimeEntryData);
-  }
+      //allTimeEntryData
+   this._timeEntryService.loadAllTimeEntry().subscribe(
+       res =>{
+                 this.allTimeEntryData = res;
+                console.log(this.allTimeEntryData);
+       },
+            err => this._notificationService.popToastError('Error','An error occured while processing your request.')
+       );}
 
  loadTimeEntryById(timeEntryId){
-   this._timeEntryService.loadTimeEntryById(timeEntryId).subscribe();
-
-    let sub =  this._timeEntryService.loadTimeEntryById(timeEntryId)
-            .subscribe(data => {
-                if (data != null) {
-                    this.timeEntryById = data; // We have something     
-                }
-                else {
-                    console.log('No data returned');
-                    // Do something else letting the end user know of this.
-                }
+   this._timeEntryService.loadTimeEntryById(timeEntryId).subscribe(
+            res => {
+                this.timeEntryById = res;
+                console.log(this.timeEntryById);
             },
-            err => {
-                console.log('we got an error:', err);
-            });
- console.log(this.timeEntryById);
-  //  this._timeEntryService.loadTimeEntryById(timeEntryId); 
-  //   console.log(this.timeEntryById)
-   
+            err => this._notificationService.popToastError('Error','An error occured while processing your request.')
+        ); 
  }
 
   saveTimeEntry(timeEntryId){
@@ -93,10 +102,10 @@ export class NewtimeentryComponent implements OnInit {
       this._timeEntryService.updateTimeEntry(timeEntryId,formData); 
   }
 
-  deleteTimeEntry(employeeKey: string) {
+  deleteTimeEntry(timeEntryId: string) {
     this._alertService.openConfirmationDialog('Delete Time','Are you sure you want delete this time entry',
       () => {
-        this._timeEntryService.deleteTimeEntryById("1");
+        this._timeEntryService.deleteTimeEntryById(timeEntryId);
         this._notificationService.popToastSuccess('Success','You have successfully delete the time entry.');
       });
   }

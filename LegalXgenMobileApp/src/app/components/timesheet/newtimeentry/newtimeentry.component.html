@@ -40,8 +40,8 @@
                   <div class="input-group-addon">
                      <i class="fa fa-briefcase"></i>
                   </div>
-                  <input type="hidden"  [(ngModel)]="timeEntryModel.timeEntryId" formControlName="timeEntryId"  >
-                  <input id="textMatter" type="text"  autocomplete="off" class="form-control validate pull-right"  [(ngModel)]="timeEntryModel.textMatter" formControlName="textMatter"  >
+                  <input type="hidden"  [(ngModel)]="timeEntryModel.timeEntryId" formControlName="timeEntryId"  >       
+                  <input id="textMatter" type="text"  autocomplete="off" class="form-control validate pull-right" [typeahead]="states" class="form-control"  [(ngModel)]="timeEntryModel.textMatter" formControlName="textMatter"  >
                </div>
                <!-- /.input group -->
             </div>

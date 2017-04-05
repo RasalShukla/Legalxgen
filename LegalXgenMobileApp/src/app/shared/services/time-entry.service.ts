@@ -18,29 +18,22 @@ import 'rxjs/Rx';
 @Injectable()
 export class TimeEntryService {
   
-   public timeEntryData : TimeEntry; 
    baseUrl: string = "http://localhost:51289/api/timeentry";
-  constructor(private  _http: Http,
+   constructor(private  _http: Http,
               private _route: Router,
               private _notificationService: NotificationService) { }
 
 createTimeEntry(timeEntry : TimeEntry){
-  
-         
          return this._http.post(this.baseUrl, timeEntry, xhrHeaders)
-                         .map((res => res.json())).subscribe(
-                           response=> console.log(response),
+                           .map((res => res.json())).subscribe(
+                          response=> console.log(response),
                            err => console.log("An Error Occured While Processing Your Request"));
                        
     }   
 
     deleteTimeEntryById (id:string) {
-         this._http.delete(this.baseUrl +"/" + id).
-                         map((res => res.json())).subscribe(
-                         response=> console.log(response),
-                         err => console.log("An Error Occured While Processing Your Request"));
-                         //  after that loadTime Entry Function So that grid should be reefreshed automatically
-                                              
+       return  this._http.delete(this.baseUrl +"/" + id).map(res => res.json())
+                    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));                                           
     }  
 
    
@@ -53,28 +46,20 @@ createTimeEntry(timeEntry : TimeEntry){
                          )                   
     }   
 
-    loadAllTimeEntry() {
-    return   this._http.get(this.baseUrl).map((res => res.json()))
-     .subscribe(res=> console.log(res),err => console.log(err))
-           
+    loadAllTimeEntry() : Observable<TimeEntry[]> {
+    return   this._http.get(this.baseUrl).map(res => res.json())
+             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));        
   }
   
-   loadTimeEntryById(id) 
+   loadTimeEntryById(id) : Observable<TimeEntry>
    {
-
-    return this._http.get(this.baseUrl+ "/" + id).map((res => res.json()));
-     //.subscribe(
-       //              result=> console.log(result),
-         //            err=>console.log(err)
-           //          );
-      // this._http.get(this.baseUrl+ "/" + id).map((res => res.json())).subscribe(
-      //                result=> console.log(result),
-      //                err=>console.log(err)
-      //                );
-                    
+      return this._http.get(this.baseUrl+ "/" + id).map(res => res.json())
+       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));                    
    }
-   processResult(data){
-      this.timeEntryData = data; 
+
+   loadTypeAheadData() : Observable<string[]>{
+      return this._http.get(this.baseUrl+ "/" + "GetTypeAhead").map(res => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
    }
 
   

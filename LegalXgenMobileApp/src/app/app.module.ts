@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule,Http } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,6 +20,12 @@ import { NotificationService } from './shared/services/notification.service';
 import { AlertService } from './shared/services/alert.service';
 import { ConfirmActivateGuard } from './shared/security/confirm-activate-guard';
 import { TimeEntryService }    from './shared/services/time-entry.service';
+import { TypeaheadModule } from 'ng2-bootstrap';
+import {enableProdMode} from '@angular/core';
+
+// enable production mode
+enableProdMode();
+
 
 @NgModule({
   declarations: [
@@ -39,8 +44,9 @@ import { TimeEntryService }    from './shared/services/time-entry.service';
     Routing,
     FormsModule,
     ReactiveFormsModule,
-    ToasterModule
-  ],
+    ToasterModule,
+    TypeaheadModule.forRoot()
+   ],
   providers: [
     GlobalEventsManager,
     AccountService,
