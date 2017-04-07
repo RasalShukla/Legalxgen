@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from '../../shared/services/account.service';
-
+import {  AuthInfoResponce } from "../../shared/globalUserInfo";
 
 @Component({
   selector: 'app-appheader',
@@ -9,16 +8,15 @@ import { AccountService } from '../../shared/services/account.service';
   styleUrls: ['./appheader.component.css']
 })
 export class AppheaderComponent  {
-
- 
-
-constructor(   private router: Router,private _accountService: AccountService){
   
+  public authInfoResponce: AuthInfoResponce;
+
+constructor(private _accountService: AccountService){
+      this._accountService.authInfo$.map(authInfo => authInfo.$authResponce).subscribe(userGlobalData=> this.authInfoResponce = userGlobalData);
   }
 
 logOut() {
     this._accountService.logOut();
-
   }
  
 }

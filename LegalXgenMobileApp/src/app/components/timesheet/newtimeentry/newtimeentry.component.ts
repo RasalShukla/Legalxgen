@@ -16,7 +16,6 @@ declare var timepicker: any;
   styleUrls: ['./newtimeentry.component.css']
 })
 export class NewtimeentryComponent implements OnInit {
-    globalEmailData : any;
     form: FormGroup;
     title: string;
     timeEntryModel : TimeEntry =   new TimeEntry("0","","","","",false,"");
@@ -44,10 +43,7 @@ export class NewtimeentryComponent implements OnInit {
             isBillable: [],
             workDone:[]
         });
-      // Way to access global data 
-      console.log("Way to access global data");
-      this._accountService.authInfo$.map(authInfo => authInfo.$userEmail).subscribe(userGlobalData=> this.globalEmailData = userGlobalData);
-      console.log("Global Data Email :-" + this.globalEmailData);
+   
    }
 
   ngOnInit() {

@@ -6,18 +6,21 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import { Login } from  '../model/login';
 import {Observable, BehaviorSubject, Subject} from "rxjs/Rx";
-import { AuthInfo } from "../../shared/globalUserInfo";
+import { AuthInfo, AuthInfoResponce } from "../../shared/globalUserInfo";
 import { GlobalEventsManager } from '../../globalEventManager';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../services/notification.service'
-import {xhrHeaders} from "./xhr-headers";
+import { xhrHeaders } from "./xhr-headers";
+import { LoginResponse } from '../model/loginResponce';
 
 @Injectable()
 export class AccountService {
-   static UNKNOWN_USER = new AuthInfo(null);
-    baseUrl: string = "http://localhost:51289/api/account";
-   authInfo$:BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AccountService.UNKNOWN_USER);
-public globalEmailData : any;
+ 
+ 
+  static UNKNOWN_USER = new AuthInfo(new AuthInfoResponce(null,null,null,null,null,null,null,null));
+  baseUrl: string = "http://localhost:51289/api/account";
+  authInfo$:BehaviorSubject<AuthInfo> = new BehaviorSubject<AuthInfo>(AccountService.UNKNOWN_USER);
+
   public responce:any;
   constructor(private _http:Http, 
               private _globalEventsManager: GlobalEventsManager,
@@ -25,19 +28,13 @@ public globalEmailData : any;
               private _notificationService: NotificationService) { }
 
 
-  login(login:Login)  {
-    
-      //this._http.delete(this.baseUrl + "/" +id).map((res => res.json())).subscribe(aa=>console.log(aa),err=>console.log(err));
-     //this._http.get(this.baseUrl+ "/" + id).map((res => res.json())).subscribe(aa=>console.log(aa),err=>console.log(err));
-     //this._http.put(this.baseUrl +"/" + id,login).map((res => res.json())).subscribe(aa=>console.log(aa),err=>console.log(err));
+  login(login:Login)  { 
      let url = this.baseUrl + "?email=" + login['email'] + "&password=" + login['password'];
      this._http.get(url).map((res => res.json()))
      .subscribe(
         (data) => this.afterLoginResponce(data),
         (err) => console.log("Error" + err)
       );
-      // if you don't have the API the please comment the above code and uncomment the below code.
-   // this.withoutApiLogin('rasalshukla@gmail.com');
     
    
   }
@@ -53,24 +50,13 @@ public globalEmailData : any;
   }
 
 
-  withoutApiLogin(email : string)
+  
+  afterLoginResponce(loginResponce : LoginResponse)
   {
-    const subject = new Subject<any>();
-      this._globalEventsManager.showNavBar.emit(true);
-      const authInfo = new AuthInfo(email);
-      this.authInfo$.next(authInfo);
-      subject.next(authInfo);
-      subject.complete();
-      this._router.navigate(['/mytimesheet']);
-       this._notificationService.popToastSuccess('Welcome','User has authenticated to use this site');
-  }
-  afterLoginResponce(data : Login)
-  {
-   
     // This is observable after responce , I am saving user responce in authinfo 
       const subject = new Subject<any>();
       this._globalEventsManager.showNavBar.emit(true);
-      const authInfo = new AuthInfo(data.email);
+      const authInfo = this.setGlobalDataInAuthInfo(loginResponce);
       this.authInfo$.next(authInfo);
       subject.next(authInfo);
       subject.complete();
@@ -78,5 +64,20 @@ public globalEmailData : any;
        this._notificationService.popToastSuccess('Welcome','User has authenticated to use this site');
   
   }
+
+
+setGlobalDataInAuthInfo(loginResponce : LoginResponse): AuthInfo {
+    return new AuthInfo( new AuthInfoResponce(
+                            loginResponce.customer,
+                            loginResponce.customerId,
+                            loginResponce.lxDrivePath,
+                            loginResponce.name,
+                            loginResponce.password,
+                            loginResponce.userId,
+                            loginResponce.userName,
+                            loginResponce.imageUrl
+                         ));
+ }
 }
+
 
