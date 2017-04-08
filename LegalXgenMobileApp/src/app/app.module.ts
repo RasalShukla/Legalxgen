@@ -23,6 +23,8 @@ import { TimeEntryService }    from './shared/services/time-entry.service';
 import { TypeaheadModule } from 'ng2-bootstrap';
 import {enableProdMode} from '@angular/core';
 import { MyTimeSheetService } from './shared/services/myTimeSheet.service';
+import { DashboardComponent } from './components/reports/dashboard/dashboard.component';
+import { ChartsModule } from 'ng2-charts';
 // enable production mode
 enableProdMode();
 
@@ -35,7 +37,9 @@ enableProdMode();
     AppmenuComponent,
     NewtimeentryComponent,
     MytimesheetComponent,
-    AccountComponent
+    AccountComponent,
+    DashboardComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ enableProdMode();
     FormsModule,
     ReactiveFormsModule,
     ToasterModule,
+    ChartsModule,
     TypeaheadModule.forRoot()
    ],
   providers: [

@@ -1,0 +1,42 @@
+<div  class="col-md-12">
+   <div class="col-md-6">
+      <div style="max-height: 200px;max-width: 300px;">
+         <canvas baseChart
+         [data]="pieChartData"
+         [labels]="pieChartLabels"
+         [chartType]="pieChartType"
+         (chartHover)="chartHovered($event)"
+         (chartClick)="chartClicked($event)"></canvas>
+      </div>
+   </div>
+   <div class="col-md-6">
+      <div style="max-height: 200px;max-width: 300px;">
+         <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+      </div>
+   </div>
+</div>
+
+
+<!--<div  class="col-md-12" style="margin-top:20px !important">
+   <div class="col-md-6">
+      <div style="max-height: 200px;max-width: 300px;">
+         <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+      </div>
+   </div>
+  
+</div>-->
+
