@@ -12,12 +12,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../services/notification.service'
 import {xhrHeaders} from "./xhr-headers";
 import { TimeEntry } from  '../model/timeEntry';
+import { State } from  '../model/states';
 import 'rxjs/Rx';
 
 
 @Injectable()
 export class TimeEntryService {
-  
+  public state : State[];
    baseUrl: string = "http://localhost:51289/api/timeentry";
    constructor(private  _http: Http,
               private _route: Router,
@@ -57,9 +58,14 @@ createTimeEntry(timeEntry : TimeEntry){
        .catch((error: any) => Observable.throw(error.json().error || 'Server error'));                    
    }
 
-   loadTypeAheadData() : Observable<string[]>{
+   loadTypeAheadData() {
       return this._http.get(this.baseUrl+ "/" + "GetTypeAhead").map(res => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+   }
+
+   loadTypeAheadBySearchString(searchValue :string){
+      return this._http.get(this.baseUrl+ "/" + "GetTypeAheadBySearchString?searchValue=" + searchValue)
+      .map(res => <State[]> res.json()).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
    }
 
   

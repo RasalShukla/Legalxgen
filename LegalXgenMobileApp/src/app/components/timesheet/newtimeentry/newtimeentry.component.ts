@@ -8,7 +8,9 @@ import { NotificationService } from '../../../shared/services/notification.servi
 import { AlertService } from '../../../shared/services/alert.service';
 declare var $:any;
 declare var timepicker: any;
-
+import {Observable, BehaviorSubject, Subject} from "rxjs/Rx";
+import { TypeaheadMatch } from 'ng2-bootstrap/typeahead';
+import { State } from  '../../../shared/model/states';
 
 @Component({
   selector: 'app-newtimeentry',
@@ -16,6 +18,17 @@ declare var timepicker: any;
   styleUrls: ['./newtimeentry.component.css']
 })
 export class NewtimeentryComponent implements OnInit {
+     ngOnInit() {
+          /* Bootstarp time timepicker initialization code */
+         $( document ).ready(function() {
+            $(".timepicker").timepicker({
+            showInputs: false
+            });
+         });
+       }
+
+
+
     form: FormGroup;
     title: string;
     timeEntryModel : TimeEntry =   new TimeEntry("0","","","","",false,"");
@@ -26,8 +39,14 @@ export class NewtimeentryComponent implements OnInit {
     public allTimeEntryData : TimeEntry[]; 
     public timeEntryById : TimeEntry; 
     /*Typehaed Data storer */
-    public states: string[];   
-   
+    public states: string[];  
+    public asyncSelected: string;
+    public typeaheadLoading: boolean;
+    public typeaheadNoResults: boolean;
+    public dataSource: Observable<any>;
+    public state : State[];
+    public statesComplex: any[] = [];
+ 
   constructor( private _accountService: AccountService,
                private _notificationService: NotificationService,
                private _alertService : AlertService,
@@ -43,32 +62,36 @@ export class NewtimeentryComponent implements OnInit {
             isBillable: [],
             workDone:[]
         });
-   
+     
+     //BootStrap TypeAhead Search
+     this.dataSource = Observable
+      .create((observer: any) => {
+        // Runs on every search
+        observer.next(this.timeEntryModel.textMatter);
+      })
+      .mergeMap((token: string) => this.getStatesAsObservable(token));
    }
 
-  ngOnInit() {
-      this.loadTimeEntry();
-      /* Bootstarp TypeAhed Initialization code start */
-        this._timeEntryService.loadTypeAheadData().subscribe(typeAheadResponce=>{
-           this.states = typeAheadResponce;
-            console.log(this.states);
-        });
-       
-       
-        /* Bootstarp time timepicker initialization code */
-        /* This is wrong practice to use jquery, 
-            in future I will create a component 
-           for time picker , I did it just because of less time
-           but my personal suggestion is please don't use this approch */
-         $( document ).ready(function() {
-         $(".timepicker").timepicker({
-          showInputs: false
-         });
-        
-      });
+ /********************************************Code Start Related With Bootstarp TypeAhead Loading************************************************************** */
+  public getStatesAsObservable(token: string): Observable<any> {  
+        return  this._timeEntryService.loadTypeAheadBySearchString(token).do(contacts => this.statesComplex = contacts);
   }
+ 
+  public changeTypeaheadLoading(e: boolean): void {
+    this.typeaheadLoading = e;
+  }
+ 
+  public changeTypeaheadNoResults(e: boolean): void {
+    this.typeaheadNoResults = e;
+  }
+ 
+  public typeaheadOnSelect(e: TypeaheadMatch): void {
+    console.log('Selected value: ', e.value);
+  } 
+/********************************************Code End Related With Bootstarp TypeAhead Loading************************************************************** */
 
-  loadTimeEntry(){
+
+   loadTimeEntry(){
       //allTimeEntryData
    this._timeEntryService.loadAllTimeEntry().subscribe(
        res =>{
@@ -105,6 +128,7 @@ export class NewtimeentryComponent implements OnInit {
         this._notificationService.popToastSuccess('Success','You have successfully delete the time entry.');
       });
   }
+}
   
 
-}
+

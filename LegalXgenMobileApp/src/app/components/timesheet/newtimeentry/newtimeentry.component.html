@@ -1,4 +1,3 @@
-
 <section class="content-header">
    <h1>
       {{mainHeadingText}}
@@ -9,39 +8,36 @@
       <li class="active">{{breadcrumbActiveText}}</li>
    </ol>
 </section>
-
 <section class="content" >
-  
    <div class="col-md-12">
       <div class="box box-primary">
-        
          <div class="box-body" role="form"  [formGroup]="form">
-        
-  <div class="bootstrap-timepicker">
-                <div class="form-group">
+            <div class="bootstrap-timepicker">
+               <div class="form-group">
                   <label>Time picker(This is dummy Section please remove it):</label>
-
                   <div class="input-group">
-                    <input type="text" class="form-control timepicker">
-                    <div class="input-group-addon">
-                      <i class="fa fa-clock-o"></i>
-                    </div>
+                     <input type="text" class="form-control timepicker">
+                     <div class="input-group-addon">
+                        <i class="fa fa-clock-o"></i>
+                     </div>
                   </div>
                   <!-- /.input group -->
-                </div>
-  </div>
-
-
-
-
+               </div>
+            </div>
             <!-- Date -->
             <div class="form-group">
                <div class="input-group date">
                   <div class="input-group-addon">
                      <i class="fa fa-briefcase"></i>
                   </div>
-                  <input type="hidden"  [(ngModel)]="timeEntryModel.timeEntryId" formControlName="timeEntryId"  >       
-                  <input id="textMatter" type="text"  autocomplete="off" class="form-control validate pull-right" [typeahead]="states" class="form-control"  [(ngModel)]="timeEntryModel.textMatter" formControlName="textMatter"  >
+                  <input type="hidden"  [(ngModel)]="timeEntryModel.timeEntryId" formControlName="timeEntryId"  >                     
+                  <input  id="textMatter" [(ngModel)]="this.timeEntryModel.textMatter"  type="text"  autocomplete="off"  [typeahead]="dataSource"  typeaheadMinLength="3"  (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)" typeaheadOptionsLimit="50" typeaheadOptionField="name"  placeholder="Matter"  class="form-control validate pull-right" formControlName="textMatter" >
+                  <div *ngIf="typeaheadLoading===true">
+                     <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
+                  </div>
+                  <div *ngIf="typeaheadNoResults===true" class="" style="">
+                     <i class="glyphicon glyphicon-remove"></i> No Results Found
+                  </div>
                </div>
                <!-- /.input group -->
             </div>
@@ -67,12 +63,10 @@
                   <div class="input-group-addon">
                      <i class="fa fa-clock-o"></i>
                   </div>
-                 <input id="totalTime" type="text"   autocomplete="off" class="form-control timepicker"  [(ngModel)]="timeEntryModel.totalTime" formControlName="totalTime"  > 
+                  <input id="totalTime" type="text"   autocomplete="off" class="form-control timepicker"  [(ngModel)]="timeEntryModel.totalTime" formControlName="totalTime"  > 
                </div>
                <!-- /.input group -->
-            </div>  
-            
-              
+            </div>
             <div class="form-group bootstrap-timepicker">
                <label>Time (Billable):</label>
                <div class="input-group date">
@@ -88,7 +82,6 @@
                <label>Work Done</label>
                <textarea id="billableTime" class="form-control" placeholder="Enter Workdone" rows="3" [(ngModel)]="timeEntryModel.workDone" formControlName="workDone"></textarea>
             </div>
-           
          </div>
          <!-- /.box-body -->
          <div class="box-footer">
@@ -97,11 +90,8 @@
             <button  class="btn btn-success"  (click)="updateTimeEntry(timeEntryModel.timeEntryId)">Post</button>
             <button  class="btn btn-success"  (click)="loadTimeEntry()">Load All Time Entry</button>
             <button  class="btn btn-warning"  (click)="loadTimeEntryById(timeEntryModel.timeEntryId)">Load Time Entry y Id</button>
-             
-         </div> 
-          
+         </div>
       </div>
       <!-- /.box -->       
    </div>
- 
 </section >
