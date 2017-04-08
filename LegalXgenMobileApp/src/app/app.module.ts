@@ -22,7 +22,7 @@ import { ConfirmActivateGuard } from './shared/security/confirm-activate-guard';
 import { TimeEntryService }    from './shared/services/time-entry.service';
 import { TypeaheadModule } from 'ng2-bootstrap';
 import {enableProdMode} from '@angular/core';
-
+import { MyTimeSheetService } from './shared/services/myTimeSheet.service';
 // enable production mode
 enableProdMode();
 
@@ -54,6 +54,7 @@ enableProdMode();
     ConfirmActivateGuard,
     TimeEntryService,
     AlertService,
+    MyTimeSheetService,
     [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
   ],
   bootstrap: [AppComponent]
