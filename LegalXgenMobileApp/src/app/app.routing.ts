@@ -11,12 +11,9 @@ const appRoutes: Routes = [
       { path: 'account', component: AccountComponent, pathMatch:'full' },
       { path: 'mytimesheet', component: MytimesheetComponent,canActivate: [ConfirmActivateGuard] },
       { path: 'newtimeentry', component: NewtimeentryComponent,canActivate: [ConfirmActivateGuard] },
-       { path: 'dashboard', component: DashboardComponent,canActivate: [ConfirmActivateGuard] },
+      { path: 'dashboard', component: DashboardComponent,canActivate: [ConfirmActivateGuard] },
       { path: '',   component: MytimesheetComponent },
       { path: '**', component: MytimesheetComponent }   
 ];
-
-
-
 
 export const Routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

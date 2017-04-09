@@ -8,13 +8,10 @@ import {  AuthInfoResponce } from "../../shared/globalUserInfo";
 })
 export class AppmenuComponent implements OnInit {
 
-  public authInfoResponce: AuthInfoResponce;
-   
-  constructor(private _accountService: AccountService,) {
-     this._accountService.authInfo$.map(authInfo => authInfo.$authResponce).subscribe(userGlobalData=> this.authInfoResponce = userGlobalData);
-   }
+    public authInfoResponce: AuthInfoResponce;
 
-  ngOnInit() {
-  }
-
+    constructor(private _accountService: AccountService, ) {
+        this._accountService.authInfo$.map(authInfo => authInfo.$authResponce).subscribe(userGlobalData => this.authInfoResponce = userGlobalData);
+    }
+    ngOnInit() {}
 }

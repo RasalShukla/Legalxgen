@@ -7,7 +7,6 @@ export class AuthInfo {
   isLoggedIn() {
     return !!this.$authResponce.$userId;
   }
-
 }
 
 export class AuthInfoResponce

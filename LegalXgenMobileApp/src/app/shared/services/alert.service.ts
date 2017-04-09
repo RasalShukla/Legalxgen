@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 declare var alertify: any;
 
 /**
@@ -12,10 +11,7 @@ declare var alertify: any;
 @Injectable()
 export class AlertService {
     private _notifier: any = alertify;
-
     constructor() { }
-
-   
     /**
      * 
      * Function to display confirmation pop up 
@@ -26,15 +22,11 @@ export class AlertService {
      * @memberOf AlertService
      */
     openConfirmationDialog(title: string,message: string, okCallback: () => any) {
-        
         this._notifier.confirm(title,message, function (e) {
             if (e) {
                 okCallback();
             } else {
             }
         },null);
-
-      
     }
-
 }
