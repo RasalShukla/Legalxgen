@@ -1,4 +1,8 @@
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
+
+/**
+ * GlobalValidator class responsible for validating the enetred mail id
+ */
 export class GlobalValidator {
     static mailFormat(control: FormControl): ValidationResult {
         var EMAIL_REGEXP = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;

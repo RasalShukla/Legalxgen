@@ -12,15 +12,29 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-
+/**
+ * Time entry service class , which deals with all the http operation and make 
+ * server side connection to access data from server side 
+ */
 @Injectable()
 export class TimeEntryService {
     public state: State[];
     baseUrl: string = "http://localhost:51289/api/timeentry";
-    constructor(private _http: Http,
-        private _route: Router,
-        private _notificationService: NotificationService) {}
 
+    
+    /**
+     * @param  {Http} private_http
+     * @param  {Router} private_route
+     * @param  {NotificationService} private_notificationService
+     */
+    constructor( private _http: Http,
+                 private _route: Router,
+                 private _notificationService: NotificationService ) {}
+    
+    /**
+     * function to create new time entry
+     * @param  {TimeEntry} timeEntry
+     */
     createTimeEntry(timeEntry: TimeEntry) {
         return this._http.post(this.baseUrl, timeEntry, xhrHeaders)
             .map((res => res.json())).subscribe(
@@ -28,38 +42,55 @@ export class TimeEntryService {
                 err => console.log("An Error Occured While Processing Your Request"));
 
     }
-
-    deleteTimeEntryById(id: string) {
+    
+  /**
+   * function to delete time entry by its id
+   * @param  {string} id
+   * @returns Observable
+   */
+  public deleteTimeEntryById(id: string) : Observable<any> {
         return this._http.delete(this.baseUrl + "/" + id).map(res => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
 
-
-    updateTimeEntry(id: number, timeEntry: TimeEntry) {
+   /**
+    * function to update time entry by its id
+    * @param  {number} id
+    * @param  {TimeEntry} timeEntry
+    */
+   public updateTimeEntry(id: number, timeEntry: TimeEntry) {
         return this._http.put(this.baseUrl + "/" + id, timeEntry, xhrHeaders)
             .map(res => res.json()).subscribe(
                 res => console.log(res),
                 err => console.log(err)
             )
     }
-
-    loadAllTimeEntry(): Observable < TimeEntry[] > {
+    
+    /**
+     * function to load all time entry 
+     * @returns Observable
+     */
+    public loadAllTimeEntry(): Observable <TimeEntry[]> {
         return this._http.get(this.baseUrl).map(res => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    loadTimeEntryById(id): Observable < TimeEntry > {
+   /**
+    * function to load time entry by its id 
+    * @param  {} id
+    * @returns Observable
+    */
+   public loadTimeEntryById(id): Observable <TimeEntry> {
         return this._http.get(this.baseUrl + "/" + id).map(res => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
-
-    loadTypeAheadData() {
-        return this._http.get(this.baseUrl + "/" + "GetTypeAhead").map(res => res.json())
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-    }
-
-    loadTypeAheadBySearchString(searchValue: string) {
+    
+   /**
+    * function to search typeahead data by search value
+    * @param  {string} searchValue
+    */
+   public loadTypeAheadBySearchString(searchValue: string) {
         return this._http.get(this.baseUrl + "/" + "GetTypeAheadBySearchString?searchValue=" + searchValue)
             .map(res => < State[] > res.json()).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

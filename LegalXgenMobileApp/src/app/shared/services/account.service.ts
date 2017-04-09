@@ -13,6 +13,10 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
+/**
+ * Account service class , which deals with all the http operation and make 
+ * server side connection to access data from server side 
+ */
 @Injectable()
 export class AccountService {
 
@@ -21,35 +25,55 @@ export class AccountService {
     authInfo$: BehaviorSubject < AuthInfo > = new BehaviorSubject < AuthInfo > (AccountService.UNKNOWN_USER);
 
     public responce: any;
+    /**
+     * @param  {Http} private_http
+     * @param  {GlobalEventsManager} private_globalEventsManager
+     * @param  {Router} private_router
+     * @param  {NotificationService} private_notificationService
+     */
     constructor(private _http: Http,
         private _globalEventsManager: GlobalEventsManager,
         private _router: Router,
         private _notificationService: NotificationService) {}
 
-
-    login(login: Login) {
+    /**
+     * funtion to login in application 
+     * @param  {Login} login
+     * @returns void
+     */
+    public login(login: Login) : void {
         let url = this.baseUrl + "?email=" + login['email'] + "&password=" + login['password'];
         this._http.get(url).map((res => res.json()))
             .subscribe(
                 (data) => this.afterLoginResponce(data), (err) => console.log("Error" + err)
             );
-
-
     }
-    clearDataOnBackMovement() {
+    
+   /**
+    * funtion to remove all the session data when user press back button of browser , and reach to login screen
+    * @returns void
+    */
+   public clearDataOnBackMovement()  : void {
         this.authInfo$.next(AccountService.UNKNOWN_USER);
         this._globalEventsManager.showNavBar.emit(false);
     }
-
-    logOut() {
+    
+    /**
+     * function to logout user , and remove its data from current session
+     * @returns void
+     */
+    public logOut()  : void {
         this.authInfo$.next(AccountService.UNKNOWN_USER);
         this._globalEventsManager.showNavBar.emit(false);
         this._router.navigate(['/account']);
     }
 
-
-
-    afterLoginResponce(loginResponce: LoginResponse) {
+   /**
+    * function to process login responce if login is successfull
+    * @param  {LoginResponse} loginResponce
+    * @returns void
+    */
+   public afterLoginResponce(loginResponce: LoginResponse)  : void {
         // This is observable after responce , I am saving user responce in authinfo 
         const subject = new Subject < any > ();
         this._globalEventsManager.showNavBar.emit(true);
@@ -62,8 +86,12 @@ export class AccountService {
 
     }
 
-
-    setGlobalDataInAuthInfo(loginResponce: LoginResponse): AuthInfo {
+    /**
+     * function to add login responce in AutuInfo , which is accessable in global manner
+     * @param  {LoginResponse} loginResponce
+     * @returns AuthInfo
+     */
+   public setGlobalDataInAuthInfo(loginResponce: LoginResponse): AuthInfo {
         return new AuthInfo(new AuthInfoResponce(
             loginResponce.customer,
             loginResponce.customerId,

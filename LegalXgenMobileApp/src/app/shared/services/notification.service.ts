@@ -14,9 +14,7 @@ export class NotificationService {
 
   /**
    * Creates an instance of NotificationService.
-   * 
    * @param {ToasterService} _toasterService
-   * 
    * @memberOf NotificationService
    */
   constructor(private _toasterService: ToasterService){}

@@ -12,8 +12,12 @@ import { AccountService } from './shared/services/account.service'
 export class AppComponent {
   public showMenu : boolean;
   public globalEmailData : any;
-  constructor(  private _globalEventsManager: GlobalEventsManager, private router: Router, 
-                private _accountService: AccountService){
+  
+  /**
+   * @param  {GlobalEventsManager} private_globalEventsManager
+   */
+  constructor(  private _globalEventsManager: GlobalEventsManager ){
+     
      this.showMenu = false;
      this._globalEventsManager.showNavBar.subscribe((mode : boolean) =>{
              this.showMenu =mode;  

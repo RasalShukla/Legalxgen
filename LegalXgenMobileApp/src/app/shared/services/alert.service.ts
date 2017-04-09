@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 declare var alertify: any;
 
 /**
- * 
  * Alerify service class responsible for diplaying confirmation box
  * @export
  * @class AlertService

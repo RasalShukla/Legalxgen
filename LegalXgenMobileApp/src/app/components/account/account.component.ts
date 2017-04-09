@@ -4,7 +4,9 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { GlobalValidator } from "../../shared/validators/mail-validators";
 import { AccountService } from '../../shared/services/account.service'
 
-
+/**
+ * Account component class , contains all the functionality related to login operations
+ */
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -16,12 +18,16 @@ export class AccountComponent implements OnInit {
         this.loginModel.email = "rasalshukla@gmail.com";
         this.loginModel.password = "123456";
     }
-    loginModel: Login = new Login();
-
-    form: FormGroup;
+   
+    public loginModel: Login = new Login();
+    public form: FormGroup;
     public responce: any;
-
     public globalEmailData: any;
+    
+    /**
+     * @param  {FormBuilder} privatefb
+     * @param  {AccountService} private_accountService
+     */
     constructor(private fb: FormBuilder,
         private _accountService: AccountService,
     ) {
@@ -35,7 +41,11 @@ export class AccountComponent implements OnInit {
         });
     }
 
-    login() {
+    /**
+     * Login method, authenticates user is authorized or not
+     * @returns void
+     */
+    login() : void {
         var formData = this.form.value;
         this._accountService.login(formData);
     }
