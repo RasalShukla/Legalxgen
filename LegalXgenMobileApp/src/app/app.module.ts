@@ -25,6 +25,8 @@ import {enableProdMode} from '@angular/core';
 import { MyTimeSheetService } from './shared/services/myTimeSheet.service';
 import { DashboardComponent } from './components/reports/dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
+import { APP_CONFIG, AppConfig } from './app.config';
+
 // enable production mode
 enableProdMode();
 
@@ -60,6 +62,7 @@ enableProdMode();
     TimeEntryService,
     AlertService,
     MyTimeSheetService,
+    [{ provide: APP_CONFIG, useValue: AppConfig }],
     [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
   ],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http , Headers, RequestOptions} from '@angular/http'
 import {Observable, BehaviorSubject, Subject} from "rxjs/Rx";
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
-
+import { APP_CONFIG } from '../../app.config';
+import { IAppConfig }  from '../../iapp.config';
 /**
  * Time entry service class , which deals with all the http operation and make 
  * server side connection to access data from server side 
@@ -19,17 +20,21 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class TimeEntryService {
     public state: State[];
-    baseUrl: string = "http://localhost:51289/api/timeentry";
+    public baseUrl: string;
 
     
     /**
      * @param  {Http} private_http
      * @param  {Router} private_route
      * @param  {NotificationService} private_notificationService
+     * @param  {IAppConfig} private_config
      */
     constructor( private _http: Http,
                  private _route: Router,
-                 private _notificationService: NotificationService ) {}
+                 private _notificationService: NotificationService,
+                 @Inject(APP_CONFIG) private _config: IAppConfig) {
+                     this.baseUrl = this._config.apiTimeEntryEndpoint;
+                 }
     
     /**
      * function to create new time entry

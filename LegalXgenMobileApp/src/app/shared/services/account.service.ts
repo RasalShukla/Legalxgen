@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http,Headers,RequestOptions } from '@angular/http'
 import { Login } from  '../model/login';
 import { Observable, BehaviorSubject, Subject } from "rxjs/Rx";
@@ -12,6 +12,9 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
+import { APP_CONFIG,  } from '../../app.config';
+import { IAppConfig }  from '../../iapp.config';
+
 
 /**
  * Account service class , which deals with all the http operation and make 
@@ -21,7 +24,7 @@ import 'rxjs/add/observable/throw';
 export class AccountService {
 
     static UNKNOWN_USER = new AuthInfo(new AuthInfoResponce(null, null, null, null, null, null, null, null));
-    baseUrl: string = "http://localhost:51289/api/account";
+    public  baseUrl: string;
     authInfo$: BehaviorSubject < AuthInfo > = new BehaviorSubject < AuthInfo > (AccountService.UNKNOWN_USER);
 
     public responce: any;
@@ -30,11 +33,15 @@ export class AccountService {
      * @param  {GlobalEventsManager} private_globalEventsManager
      * @param  {Router} private_router
      * @param  {NotificationService} private_notificationService
+     * @param  {IAppConfig} private_config
      */
     constructor(private _http: Http,
         private _globalEventsManager: GlobalEventsManager,
         private _router: Router,
-        private _notificationService: NotificationService) {}
+        private _notificationService: NotificationService,
+        @Inject(APP_CONFIG) private _config: IAppConfig) {
+           this.baseUrl = this._config.apiAccontEndpoint;
+        }
 
     /**
      * funtion to login in application 
@@ -45,7 +52,7 @@ export class AccountService {
         let url = this.baseUrl + "?email=" + login['email'] + "&password=" + login['password'];
         this._http.get(url).map((res => res.json()))
             .subscribe(
-                (data) => this.afterLoginResponce(data), (err) => console.log("Error" + err)
+                (data) => this.afterLoginResponce(data), (err) => console.log("Error" + err),
             );
     }
     
